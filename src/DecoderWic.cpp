@@ -3,36 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-/*
-static void BlitFrame(const FrameData& frame, std::vector<BYTE>& canvas, UINT canvasWidth, UINT canvasHeight) {
-    if (canvasWidth == 0 || canvasHeight == 0) return;
-    if (frame.pixelBuffer.empty()) return;
-    if (frame.left >= canvasWidth || frame.top >= canvasHeight) return;
-    if (frame.width == 0 || frame.height == 0) return;
 
-    UINT copyWidth = std::min(frame.width, canvasWidth - frame.left);
-    UINT copyHeight = std::min(frame.height, canvasHeight - frame.top);
-
-    const size_t srcStride = static_cast<size_t>(frame.width) * 4;
-    if (srcStride == 0) return;
-
-    const size_t requiredSrcSize = srcStride * frame.height;
-    if (frame.pixelBuffer.size() < requiredSrcSize) {
-        UINT availableRows = static_cast<UINT>(frame.pixelBuffer.size() / srcStride);
-        copyHeight = std::min(copyHeight, availableRows);
-    }
-
-    for (UINT y = 0; y < copyHeight; ++y) {
-	    BYTE* dstRow = &canvas[((frame.top + y) * canvasWidth + frame.left) * 4];
-	    const BYTE* srcRow = &frame.pixelBuffer[y * srcStride];
-	    
-	    // Copy the entire row width at once
-	    // memcpy(dest, source, count)
-	    memcpy(dstRow, srcRow, copyWidth * 4);
-	}
-}
-
-*/
 static void BlitFrame(const FrameData& frame, std::vector<BYTE>& canvas, UINT canvasWidth, UINT canvasHeight) {
     if (canvasWidth == 0 || canvasHeight == 0) return;
     if (frame.pixelBuffer.empty()) return;
@@ -150,21 +121,7 @@ HRESULT DecodeWIC(AsyncLoadData* pData) {
             pConverter->Release();
         }
 		///////////////
-		/*
-        IWICFormatConverter* pConverter = nullptr;
-        if (SUCCEEDED(pLocalWICFactory->CreateFormatConverter(&pConverter))) {
-            if (SUCCEEDED(pConverter->Initialize(pSource, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, nullptr, 0.0f, WICBitmapPaletteTypeMedianCut))) {
-                UINT stride = fd.width * 4;
-                UINT bufferSize = stride * fd.height;
-                fd.pixelBuffer.resize(bufferSize);
-                // Cast to BYTE* to satisfy the compiler's strict type checking
-				pConverter->CopyPixels(nullptr, stride, bufferSize, reinterpret_cast<BYTE*>(fd.pixelBuffer.data()));
-                //pConverter->CopyPixels(nullptr, stride, bufferSize, fd.pixelBuffer.data());
-            }
-            pConverter->Release();
-        }
-
-		*/
+		
         // Metadata
         IWICMetadataQueryReader* pMeta = nullptr;
         if (SUCCEEDED(pSource->GetMetadataQueryReader(&pMeta))) {
