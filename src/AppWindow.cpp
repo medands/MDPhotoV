@@ -33,11 +33,6 @@ void AppWindow::RebuildPlaylist(const std::wstring& Path) {
 	// 2. Convert the size to a wide string for MessageBoxW
 	std::wstring msg = L"Playlist loaded successfully!\n\nTotal images: " + std::to_wstring(playlistSize);
 	
-	// Optional: If you want to automatically jump to the currently loaded file 
-    // within the new playlist, you can do it here. 
-    // However, usually BuildPlaylist just sets the list, and the current image 
-    // is already displayed by the ImageLoader logic.
-    
     // If you need to refresh the UI to show playlist status:
     //InvalidateRect(m_hwnd, NULL, FALSE); 
 }
