@@ -1,5 +1,5 @@
 #include "AppWindow.h"
-#include "helper.h" // Or include helper.h and link helper.cpp
+#include "helper.h"
 
 // Global Font Assets
 HFONT g_hFontBold = nullptr;
