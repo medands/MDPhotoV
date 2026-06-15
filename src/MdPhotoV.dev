@@ -4,14 +4,14 @@ name=MdPhotoV
 Type=0
 Ver=2
 ObjFiles=
-Includes=E:\workshop\MdPhotoV5\include;E:\workshop\MdPhotoV5\deps\include;E:\workshop\Lwebp\src
-Libs=E:\workshop\MdPhotoV5\deps
+Includes= include;deps\include
+Libs=deps
 PrivateResource=MdPhotoV_private.rc
 ResourceIncludes=
 MakeIncludes=
 Compiler=
 CppCompiler=-std=c++17 -municode -DUNICODE -D_UNICODE -O3 -s -Wall -mwindows_@@_
-Linker=-static-libgcc -mwindows -mwindows -municode -mwindows -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 -ld3d11 -ldxgi -lbcrypt -lws2_32_@@_deps/libavif.a_@@_deps/libyuv.a_@@_deps/webp.a_@@_
+Linker=-static-libgcc -mwindows -municode -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 -ld3d11 -ldxgi -lbcrypt -lws2_32_@@_deps/libavif.a_@@_deps/libyuv.a_@@_deps/webp.a_@@_
 IsCpp=1
 Icon=
 ExeOutput=
