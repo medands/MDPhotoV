@@ -23,41 +23,6 @@ const wchar_t* g_AboutText2 =
     
 void ShowAboutDialog(HWND owner) {
 	DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_ABOUT_DIALOG), owner, AboutDlgProc);
-	
-	/*
-    static bool classRegistered = false;
-    HINSTANCE hInst = GetModuleHandle(NULL);
-
-    if (!classRegistered) {
-        WNDCLASSEXW wcex = { sizeof(WNDCLASSEXW) };
-        wcex.lpfnWndProc = AboutDlgProc;
-        wcex.hInstance = hInst;
-        wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-        wcex.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
-        wcex.lpszClassName = L"MdPhotoV_About_Class";
-        wcex.hIcon = LoadIconW(hInst, MAKEINTRESOURCEW(101)); // Adjust resource ID if needed
-        RegisterClassExW(&wcex);
-        classRegistered = true;
-    }
-
-    HWND hwndExisting = FindWindowW(L"MdPhotoV_About_Class", L"About MdPhotoV");
-    if (hwndExisting) {
-        SetForegroundWindow(hwndExisting);
-        return;
-    }
-
-    EnableWindow(owner, FALSE);
-    HWND hwndAbout = CreateWindowExW(
-        WS_EX_DLGMODALFRAME, L"MdPhotoV_About_Class", L"About MdPhotoV",
-        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
-        CW_USEDEFAULT, CW_USEDEFAULT, 520, 370,
-        owner, NULL, hInst, NULL);
-
-    if (hwndAbout) {
-        ShowWindow(hwndAbout, SW_SHOW);
-        UpdateWindow(hwndAbout);
-    }
-    */
 }
 
 void ShowHelpWindow(HWND owner) {
@@ -130,9 +95,6 @@ INT_PTR CALLBACK AboutDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
                 SetWindowTextW(hEdit2, g_AboutText2);
             }
 
-            // 4. Center the dialog on the owner (Optional, often handled by DialogBoxParam)
-            // If you use DialogBox(NULL, ...), it auto-centers. 
-            // If you use CreateDialog, you might need this logic again or rely on DS_CENTER style.
             HWND hOwner = GetWindow(hWnd, GW_OWNER);
             if (hOwner) {
                 RECT rcOwner, rcDlg;
