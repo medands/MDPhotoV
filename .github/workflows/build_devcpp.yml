@@ -57,7 +57,7 @@ jobs:
           -static-libgcc -mwindows -municode ^
           -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 ^
           -ld3d11 -ldxgi -lbcrypt -lws2_32 ^
-          -lavif -lyuv -lwebp
+          -lavif -lyuv -lwebp -lsetupapi
       shell: cmd
     
     - name: Upload build artifact
