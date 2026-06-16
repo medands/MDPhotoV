@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -22,8 +25,8 @@ jobs:
     - name: Create build directories
       working-directory: MdPhotoV
       run: |
-        mkdir bin
-        mkdir obj
+        mkdir -p bin
+        mkdir -p obj
       shell: bash
     
     - name: Compile resource file
