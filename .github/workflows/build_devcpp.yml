@@ -1,0 +1,81 @@
+name: Build MDPhotoV
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x86_64
+        version: 12.2.0
+    
+    - name: Create build directories
+      run: |
+        mkdir  MdPhotoV\bin
+        mkdir  MdPhotoV\obj
+      shell: cmd
+    
+    - name: Compile resource file
+      working-directory: MdPhotoV
+      run: |
+        windres -i src\resources\resources.rc -o obj\resources.o
+      shell: cmd
+    
+    - name: Build MDPhotoV
+      working-directory: MdPhotoV
+      run: |
+        g++ ^
+          -std=c++17 ^
+          -municode -DUNICODE -D_UNICODE ^
+          -O3 -s -Wall -mwindows ^
+          -I./src/include ^
+          -I./src/deps/include ^
+          -L./src/deps ^
+          -o bin\MdPhotoV.exe ^
+          src\AppWindow.cpp ^
+          src\DecoderAvif.cpp ^
+          src\DecoderWebp.cpp ^
+          src\DecoderWic.cpp ^
+          src\Dialogs.cpp ^
+          src\helper.cpp ^
+          src\ImageLoader.cpp ^
+          src\main.cpp ^
+          src\Playlist.cpp ^
+          src\Renderer.cpp ^
+          obj\resources.o ^
+          -static-libgcc -mwindows -municode ^
+          -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 ^
+          -ld3d11 -ldxgi -lbcrypt -lws2_32 ^
+          -lavif -lyuv -lwebp
+      shell: cmd
+    
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: MDPhotoV-build
+        path: MdPhotoV/bin/MdPhotoV.exe
+        retention-days: 30
+    
+    - name: Check executable
+      working-directory: MdPhotoV
+      run: |
+        if exist bin\MdPhotoV.exe (
+          echo Build successful!
+          dir bin\MdPhotoV.exe
+        ) else (
+          echo Build failed - executable not found
+          exit /b 1
+        )
+      shell: cmd
