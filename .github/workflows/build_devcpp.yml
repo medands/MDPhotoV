@@ -18,47 +18,40 @@ jobs:
       uses: egor-tensin/setup-mingw@v3
       with:
         platform: x64
-        version: 12.2.0
     
     - name: Create build directories
+      working-directory: MdPhotoV
       run: |
-        mkdir  MdPhotoV\bin
-        mkdir  MdPhotoV\obj
-      shell: cmd
+        mkdir bin
+        mkdir obj
+      shell: bash
     
     - name: Compile resource file
       working-directory: MdPhotoV
       run: |
-        windres -i src\resources\resources.rc -o obj\resources.o
-      shell: cmd
+        windres -i resources.rc --input-format=rc -o obj/resources.res -O coff
+      shell: bash
     
-    - name: Build MDPhotoV
+    - name: Compile source files
       working-directory: MdPhotoV
       run: |
-        g++ ^
-          -std=c++17 ^
-          -municode -DUNICODE -D_UNICODE ^
-          -O3 -s -Wall -mwindows ^
-          -Isrc/include ^
-          -Isrc/deps/include ^
-          -Lsrc/deps ^
-          -o bin\MdPhotoV.exe ^
-          src\AppWindow.cpp ^
-          src\DecoderAvif.cpp ^
-          src\DecoderWebp.cpp ^
-          src\DecoderWic.cpp ^
-          src\Dialogs.cpp ^
-          src\helper.cpp ^
-          src\ImageLoader.cpp ^
-          src\main.cpp ^
-          src\Playlist.cpp ^
-          src\Renderer.cpp ^
-          obj\resources.o ^
-          -static-libgcc -mwindows -municode ^
-          -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 ^
-          -ld3d11 -ldxgi -lbcrypt -lws2_32 ^
-          -lavif -lyuv -lwebp -lsetupapi
-      shell: cmd
+        g++ -c src/AppWindow.cpp -o obj/AppWindow.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/DecoderAvif.cpp -o obj/DecoderAvif.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/DecoderWebp.cpp -o obj/DecoderWebp.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/DecoderWic.cpp -o obj/DecoderWic.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/Dialogs.cpp -o obj/Dialogs.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/helper.cpp -o obj/helper.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/ImageLoader.cpp -o obj/ImageLoader.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/main.cpp -o obj/main.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/Playlist.cpp -o obj/Playlist.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+        g++ -c src/Renderer.cpp -o obj/Renderer.o -I./src/include -I./src/deps/include -mwindows -std=c++17 -municode -DUNICODE -D_UNICODE -O2 -s -Wall -ffunction-sections -fdata-sections
+      shell: bash
+    
+    - name: Link executable
+      working-directory: MdPhotoV
+      run: |
+        g++ obj/AppWindow.o obj/DecoderAvif.o obj/DecoderWebp.o obj/DecoderWic.o obj/Dialogs.o obj/helper.o obj/ImageLoader.o obj/main.o obj/Playlist.o obj/Renderer.o obj/resources.res -o bin/MdPhotoV.exe -static-libgcc -static-libstdc++ -L./src/deps -mwindows -s -municode -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 -ld3d11 -ldxgi -lbcrypt -lws2_32 -Wl,--gc-sections ./src/deps/libavif.a ./src/deps/libyuv.a ./src/deps/libwebp.a -mwindows -s
+      shell: bash
     
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
@@ -71,11 +64,11 @@ jobs:
     - name: Check executable
       working-directory: MdPhotoV
       run: |
-        if exist bin\MdPhotoV.exe (
-          echo Build successful!
-          dir bin\MdPhotoV.exe
-        ) else (
-          echo Build failed - executable not found
-          exit /b 1
-        )
-      shell: cmd
+        if [ -f bin/MdPhotoV.exe ]; then
+          echo "Build successful!"
+          ls -lh bin/MdPhotoV.exe
+        else
+          echo "Build failed - executable not found"
+          exit 1
+        fi
+      shell: bash
