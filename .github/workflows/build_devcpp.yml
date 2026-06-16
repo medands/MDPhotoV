@@ -39,9 +39,9 @@ jobs:
           -std=c++17 ^
           -municode -DUNICODE -D_UNICODE ^
           -O3 -s -Wall -mwindows ^
-          -I./src/include ^
-          -I./src/deps/include ^
-          -L./src/deps ^
+          -Isrc\include ^
+          -Isrc\deps\include ^
+          -Lsrc\deps ^
           -o bin\MdPhotoV.exe ^
           src\AppWindow.cpp ^
           src\DecoderAvif.cpp ^
