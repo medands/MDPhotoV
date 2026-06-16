@@ -57,7 +57,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add bin/MdPhotoV.exe
+        git add MdPhotoV/bin/MdPhotoV.exe
         git commit -m "Build: Update executable [skip ci]" || echo "No changes to commit"
         git push
       shell: bash
