@@ -22,8 +22,8 @@ jobs:
     
     - name: Create build directories
       run: |
-        mkdir -p MdPhotoV\bin
-        mkdir -p MdPhotoV\obj
+        mkdir  MdPhotoV\bin
+        mkdir  MdPhotoV\obj
       shell: cmd
     
     - name: Compile resource file
