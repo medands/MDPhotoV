@@ -52,7 +52,16 @@ jobs:
       run: |
         g++ obj/AppWindow.o obj/DecoderAvif.o obj/DecoderWebp.o obj/DecoderWic.o obj/Dialogs.o obj/helper.o obj/ImageLoader.o obj/main.o obj/Playlist.o obj/Renderer.o obj/resources.res -o bin/MdPhotoV.exe -static-libgcc -static-libstdc++ -L./src/deps -mwindows -s -municode -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 -ld3d11 -ldxgi -lbcrypt -lws2_32 -Wl,--gc-sections ./src/deps/libavif.a ./src/deps/libyuv.a ./src/deps/libwebp.a -mwindows -s
       shell: bash
-    
+
+    - name: Commit and push executable
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add bin/MdPhotoV.exe
+        git commit -m "Build: Update executable [skip ci]" || echo "No changes to commit"
+        git push
+      shell: bash
+      
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
       if: success()
@@ -71,13 +80,4 @@ jobs:
           echo "Build failed - executable not found"
           exit 1
         fi
-      shell: bash
-    
-    - name: Commit and push executable
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add bin/MdPhotoV.exe
-        git commit -m "Build: Update executable from workflow [skip ci]" || echo "No changes to commit"
-        git push
       shell: bash
