@@ -132,7 +132,7 @@ INT_PTR CALLBACK AboutDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
     return DefWindowProcW(hWnd, message, wParam, lParam);
 }
 
-INT_PTR CALLBACK HelpWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK HelpWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     const int IDC_HELP_EDIT = 100;
     switch (uMsg) {
         case WM_CREATE: {
