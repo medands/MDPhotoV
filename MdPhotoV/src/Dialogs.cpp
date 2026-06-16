@@ -61,7 +61,7 @@ void ShowOptionsDialog(HWND owner) {
 
 // --- Dialog Procedures ---
 
-INT_PTR CALLBACK AboutDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK AboutDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
     switch (message) {
     	case WM_INITDIALOG: {
             HINSTANCE hInstance = GetModuleHandleW(NULL);
@@ -132,7 +132,7 @@ INT_PTR CALLBACK AboutDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
     return DefWindowProcW(hWnd, message, wParam, lParam);
 }
 
-INT_PTR CALLBACK HelpWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK HelpWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     const int IDC_HELP_EDIT = 100;
     switch (uMsg) {
         case WM_CREATE: {
@@ -164,7 +164,7 @@ INT_PTR CALLBACK HelpWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
 }
 
-INT_PTR CALLBACK OptionsDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK OptionsDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
         case WM_INITDIALOG:
             return TRUE;
