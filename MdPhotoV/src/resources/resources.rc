@@ -1,6 +1,8 @@
 
-100 ICON "./src/resources/photov.ico"
-200 RCDATA "./src/resources/file_icon.ico"
+#include <windows.h> // include for version info constants
+
+100 ICON "resources/photov.ico"
+200 RCDATA "resources/file_icon.ico"
 //101 RCDATA "resources/btn_l.png"
 //102 RCDATA "resources/btn_r.png"
 //103 RCDATA "resources/btn_hover_l.png"
@@ -66,7 +68,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMEN
 CAPTION "About MdPhotoV"
 FONT 12, "Segoe UI"
 BEGIN
-    ICON            "", IDC_APP_ICON, 5, 4, 20, 20
+    ICON            "", IDC_ICON, 5, 4, 20, 20
     LTEXT           "MdPhotoV  v1.5.0", IDC_TITLE, 30, 5, 100, 10, SS_LEFT
     LTEXT           "Copyright © 2026. All rights reserved.", IDC_COPYRIGHT, 5, 18, 200, 12, SS_LEFT
     CONTROL         "", IDC_EDIT1, "EDIT", ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL , 
@@ -75,3 +77,29 @@ BEGIN
                     5, 70, 175, 64
     DEFPUSHBUTTON   "OK", IDOK, 182, 110, 40, 14
 END
+
+1 VERSIONINFO
+FILEVERSION 1,5,0,0
+PRODUCTVERSION 1,5,0,0
+FILETYPE VFT_APP
+{
+  BLOCK "StringFileInfo"
+  {
+    BLOCK "040904E4"
+    {
+      VALUE "CompanyName", "MDev"
+      VALUE "FileVersion", "1.5.0.0"
+      VALUE "FileDescription", "Developed  by MDev"
+      VALUE "InternalName", "MdPhotoV.exe"
+      VALUE "LegalCopyright", "@ Mdev Med Aissa 2026"
+      VALUE "LegalTrademarks", "®MDev"
+      VALUE "OriginalFilename", "MdPhotoV.exe"
+      VALUE "ProductName", "Md Photo Viewer"
+      VALUE "ProductVersion", "1.5.0.0"
+    }
+  }
+  BLOCK "VarFileInfo"
+  {
+    VALUE "Translation", 0x0409, 1252
+  }
+}
