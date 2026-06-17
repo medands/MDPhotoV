@@ -11,7 +11,11 @@ ResourceIncludes=
 MakeIncludes=
 Compiler=
 CppCompiler=-std=c++17 -municode -DUNICODE -D_UNICODE -O3 -s -Wall -mwindows_@@_
+<<<<<<< HEAD
 Linker=-static-libgcc -mwindows -municode -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 -ld3d11 -ldxgi -lbcrypt -lws2_32_@@_src/deps/libavif.a_@@_src/deps/webp.a_@@_
+=======
+Linker=-static-libgcc -mwindows -municode -ld2d1 -lwindowscodecs -lole32 -luuid -lcomdlg32 -lshell32 -ld3d11 -ldxgi -lbcrypt -lws2_32_@@_src/deps/libavif.a_@@_src/deps/libyuv.a_@@_src/deps/libwebp.a_@@_
+>>>>>>> 29ecfb8f0fdcb34ff17f2c4ae3837e5359d7aaa5
 IsCpp=1
 Icon=./src/resources/photov.ico
 ExeOutput=./bin
